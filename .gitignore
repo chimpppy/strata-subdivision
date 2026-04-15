@@ -1,0 +1,17 @@
+# Sensitive/Private Files
+Surveyor_Handover/EVIDENCE/
+Surveyor_Handover/DOCUMENTS/Council Documents/
+
+# IDE and OS
+.DS_Store
+.vscode/
+*.swp
+*.swo
+*~
+.env
+.env.local
+
+# Build artifacts
+dist/
+build/
+node_modules/

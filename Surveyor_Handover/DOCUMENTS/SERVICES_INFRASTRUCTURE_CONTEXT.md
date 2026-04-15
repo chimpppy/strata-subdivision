@@ -1,6 +1,4 @@
 # Services and Infrastructure Context Register
-Property: 4 and 4A Gardiner Road, Goulburn NSW
-Prepared by: Ben
 Purpose: Provide historical and technical context to support strata certification.
 
 ## 1. Plumbing and Drainage
