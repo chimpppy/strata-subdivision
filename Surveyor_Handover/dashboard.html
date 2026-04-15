@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strata Subdivision DA Tracker - 4 & 4A Gardiner Road</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3d5a80 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p { font-size: 14px; opacity: 0.9; margin-bottom: 15px; }
+        .status-overview {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .status-box {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        .content {
+            padding: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th {
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .group-row {
+            background: #ecf0f1;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .group-row td {
+            padding: 12px 10px;
+            border: none;
+        }
+        .da-number {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 14px;
+        }
+        .da-title {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        select, textarea {
+            font-family: inherit;
+            font-size: 12px;
+            padding: 6px 8px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            background: white;
+        }
+        select {
+            cursor: pointer;
+            min-width: 74px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            resize: vertical;
+            font-size: 12px;
+        }
+        .notes-text {
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+        .badge-complete { background: #d4edda; color: #155724; }
+        .badge-inprogress { background: #fff3cd; color: #856404; }
+        .badge-evidence { background: #cfe2ff; color: #084298; }
+        .badge-submitted { background: #d1e7dd; color: #0f5132; }
+        .badge-verified { background: #d1ecf1; color: #0c5460; }
+        .badge-pending { background: #f8f9fa; color: #383d41; }
+        .badge-na { background: #e2e3e5; color: #6c757d; }
+        .blocked {
+            background: #f8d7da !important;
+            color: #721c24 !important;
+        }
+        .critical {
+            border-left: 4px solid #dc3545;
+            padding-left: 10px;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        button.secondary {
+            background: #6c757d;
+        }
+        button.secondary:hover {
+            background: #5a6268;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #666;
+        }
+        .critical-path {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .critical-path h3 {
+            font-size: 13px;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+        .critical-path p {
+            font-size: 12px;
+            color: #856404;
+            line-height: 1.5;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #4a5f7f;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .section-header:hover {
+            background: #3a4f6f;
+        }
+        .toggle-arrow {
+            display: inline-block;
+            width: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .section.collapsed .toggle-arrow {
+            transform: rotate(-90deg);
+        }
+        .section.collapsed table {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DA/0238/2526 Status Tracker</h1>
+            <p>Strata Subdivision | 4 & 4A Gardiner Road, Goulburn NSW</p>
+            <div class="status-overview">
+                <div class="status-box">Overall Status: <strong id="overallStatus">Loading...</strong></div>
+                <div class="status-box">Last Updated: <strong id="lastUpdate">Now</strong></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="critical-path">
+                <h3>CRITICAL PATH (Blocks Final Submissions)</h3>
+                <p><strong>DA13 (Plumbing)</strong> → DA14/15 (Statutory Certs) → DA07 (Services) → DA12 (Strata Inspection) → DA05 (Subdivision)</p>
+            </div>
+
+            <div class="controls">
+                <button onclick="exportToJSON()">📥 Export Status (JSON)</button>
+                <button class="secondary" onclick="resetAll()">🔄 Reset All</button>
+            </div>
+
+            <!-- SECTION 1: ADMINISTRATIVE -->
+            <div class="section collapsed" id="admin-section">
+                <div class="section-header" onclick="toggleSection('admin-section')">
+                    <span class="toggle-arrow">▼</span>
+                    SECTION 1: ADMINISTRATIVE
+                </div>
+                <table id="adminTable">
+                    <thead>
+                        <tr>
+                            <th>DA</th>
+                            <th>Title</th>
+                            <th>Dependency</th>
+                            <th>Status</th>
+                            <th>Responsible</th>
+                            <th>Evidence / Output Required</th>
+                            <th>Submit To</th>
+                            <th>Context</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminBody"></tbody>
+                </table>
+            </div>
+
+            <!-- SECTION 2: INFRASTRUCTURE & SERVICES -->
+            <div class="section" id="infra-section">
+                <div class="section-header" onclick="toggleSection('infra-section')">
+                    <span class="toggle-arrow">▼</span>
+                    SECTION 2: INFRASTRUCTURE & SERVICES
+                </div>
+                <table id="infraTable">
+                    <thead>
+                        <tr>
+                            <th>DA</th>
+                            <th>Title</th>
+                            <th>Dependency</th>
+                            <th>Status</th>
+                            <th>Responsible</th>
+                            <th>Evidence / Output Required</th>
+                            <th>Submit To</th>
+                            <th>Context</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="infraBody"></tbody>
+                </table>
+            </div>
+
+            <!-- SECTION 3: STATUTORY CERTIFICATES -->
+            <div class="section" id="cert-section">
+                <div class="section-header" onclick="toggleSection('cert-section')">
+                    <span class="toggle-arrow">▼</span>
+                    SECTION 3: STATUTORY CERTIFICATES
+                </div>
+                <table id="certTable">
+                    <thead>
+                        <tr>
+                            <th>DA</th>
+                            <th>Title</th>
+                            <th>Dependency</th>
+                            <th>Status</th>
+                            <th>Responsible</th>
+                            <th>Evidence / Output Required</th>
+                            <th>Submit To</th>
+                            <th>Context</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="certBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>How to use:</strong> Update status for each DA as work progresses. Changes save automatically. Export JSON for backup.</p>
+            <p><strong>Location:</strong> <code>Surveyor_Handover/</code> → <code>DOCUMENTS/</code> and <code>EVIDENCE/</code></p>
+        </div>
+    </div>
+
+    <script>
+        const state = {
+            rows: [
+                {
+                    da: 1,
+                    group: "ADMINISTRATIVE",
+                    title: "Approved Development and Use",
+                    dependency: "None",
+                    status: "Complete",
+                    responsible: "Project Manager",
+                    evidence: "Dual occupancy + strata subdivision approval confirmation",
+                    submitTo: "Surveyor",
+                    context: "Approval for change of existing primary/secondary dwelling to detached dual occupancy and subsequent 2-lot strata subdivision",
+                    notes: ""
+                },
+                {
+                    da: 2,
+                    group: "ADMINISTRATIVE",
+                    title: "Development in Accordance with Documentation",
+                    dependency: "None",
+                    status: "Complete",
+                    responsible: "Project Manager",
+                    evidence: "Approved plans: 4444 Floor Plan, 4444 Location Plan, SEE, Compliance Letter, Servicing Plan",
+                    submitTo: "Surveyor",
+                    context: "Development must comply with endorsed plans and documentation; inconsistencies resolved in favour of conditions",
+                    notes: ""
+                },
+                {
+                    da: 3,
+                    group: "ADMINISTRATIVE",
+                    title: "Documentation Inconsistency",
+                    dependency: "None",
+                    status: "Complete",
+                    responsible: "Project Manager",
+                    evidence: "Conditions prevail over plans in event of inconsistency",
+                    submitTo: "Surveyor",
+                    context: "In any inconsistency between conditions, drawings, and documentation, conditions of Notice of Determination prevail",
+                    notes: ""
+                },
+                {
+                    da: 4,
+                    group: "ADMINISTRATIVE",
+                    title: "Documentation to be Kept on Site",
+                    dependency: "None",
+                    status: "Complete",
+                    responsible: "Project Manager",
+                    evidence: "Complete set of endorsed plans, specifications, and documentation on site",
+                    submitTo: "Surveyor",
+                    context: "All endorsed plans and documentation must be kept on site and available for Council/Principal Certifier inspection",
+                    notes: ""
+                },
+                {
+                    da: 5,
+                    group: "STATUTORY CERTIFICATES",
+                    title: "Subdivision Certification",
+                    dependency: "DA06, DA07, DA08, DA09, DA10, DA11, DA12, DA14, DA15",
+                    status: "Blocked",
+                    responsible: "Surveyor",
+                    evidence: "Strata Certificate package for Council endorsement (plans, admin sheets, electronic files, application + fees, compliance table, statutory requirements), then registered at NSW Land Registry Services",
+                    submitTo: "Council via Surveyor",
+                    context: "Strata Certificate package is lodged to Council for endorsement and then used for registration at NSW Land Registry Services. Comprehensive condition compliance table demonstrating satisfaction of all conditions is required.",
+                    notes: "Two-step close-out: (1) Council endorsement via surveyor, (2) NSW Land Registry Services registration."
+                },
+                {
+                    da: 6,
+                    group: "STATUTORY CERTIFICATES",
+                    title: "Building and Unit Numbering",
+                    dependency: "None",
+                    status: "In Progress",
+                    responsible: "Ben",
+                    evidence: "Council written confirmation of allocated house number and strata unit numbers (AS/NZS.4819:2003)",
+                    submitTo: "Council via Surveyor",
+                    context: "Draft unit numbering proposal must be submitted to Council for concurrence prior to strata certificate issue; numbers displayed per Australian Standards",
+                    notes: "Photos of installed unit numbering signage in EVIDENCE/ folder"
+                },
+                {
+                    da: 7,
+                    group: "INFRASTRUCTURE & SERVICES",
+                    title: "Services Within Lots",
+                    dependency: "None in consent (assumed practical link to DA13)",
+                    status: "Blocked",
+                    responsible: "Surveyor",
+                    evidence: "Surveyor services-within-lots certification",
+                    submitTo: "Council via Surveyor",
+                    context: "Prior to issue of any Strata Certificate, a Registered Surveyor must certify that all services as constructed (drainage, stormwater, water, gas, electricity, telecommunications, etc.) are within each lot or within appropriate easements.",
+                    notes: "Assumption for surveyor review: stamped services plan captures some services, but final DA07 certificate should confirm complete as-constructed service coverage and any water tank servicing implications."
+                },
+                {
+                    da: 8,
+                    group: "INFRASTRUCTURE & SERVICES",
+                    title: "Sewer Conditions",
+                    dependency: "None in consent (assumed practical link to DA13)",
+                    status: "Blocked",
+                    responsible: "Plumber",
+                    evidence: "Both dwellings connected via separate house drainage lines to a common riser on existing 150mm sewer junction",
+                    submitTo: "Council via Surveyor",
+                    context: "Condition requires confirmation of separate house drainage lines from both dwellings to the common riser at the existing 150mm sewer junction prior to Strata Certificate.",
+                    notes: "Assumption for surveyor review: sewerage already exists and likely satisfies intent, but confirm whether DA08 must be expressly referenced in plumber/surveyor certification package."
+                },
+                {
+                    da: 9,
+                    group: "INFRASTRUCTURE & SERVICES",
+                    title: "Water Metering",
+                    dependency: "Principal Certifier confirmation",
+                    status: "Blocked",
+                    responsible: "Council Utilities",
+                    evidence: "Council-issued/installed water meter connected to reticulated supply + Principal Certifier confirmation",
+                    submitTo: "Council via Surveyor",
+                    context: "Condition requires Council Utilities-issued meter connection to town reticulated supply and confirmation by Principal Certifier prior to further site works.",
+                    notes: "Assumption for surveyor review: meter is physically installed; confirm whether separate Principal Certifier confirmation is still required and whether to include DA09 in plumbing close-out evidence."
+                },
+                {
+                    da: 10,
+                    group: "INFRASTRUCTURE & SERVICES",
+                    title: "Electrical Supply Services",
+                    dependency: "None",
+                    status: "In Progress",
+                    responsible: "Essential Energy",
+                    evidence: "Notification of Arrangements from Essential Energy confirming infrastructure and low voltage reticulated supply to each lot",
+                    submitTo: "Council via Surveyor",
+                    context: "Prior to Strata Certificate, Notification of Arrangements from Essential Energy must be provided to Council confirming electrical infrastructure and supply arrangements.",
+                    notes: "Requested from Essential Energy with no response to date. Need assistance from surveyor to close out."
+                },
+                {
+                    da: 11,
+                    group: "INFRASTRUCTURE & SERVICES",
+                    title: "Telecommunication Services within Lots",
+                    dependency: "None",
+                    status: "In Progress",
+                    responsible: "NBN",
+                    evidence: "Letter of practical completion from NBN confirming underground telecommunications at front boundary of each allotment",
+                    submitTo: "Council via Surveyor",
+                    context: "Prior to Strata Certificate, NBN letter of practical completion is required confirming underground telecommunications at front boundary of each allotment.",
+                    notes: "Requested from NBNCo; advised they will not provide the letter. Need assistance from surveyor to determine acceptable close-out pathway."
+                },
+                {
+                    da: 12,
+                    group: "STATUTORY CERTIFICATES",
+                    title: "Strata Certificate Inspection",
+                    dependency: "DA07, DA08, DA09, DA10, DA11",
+                    status: "Blocked",
+                    responsible: "Certifier/Council",
+                    evidence: "Final inspection certificate confirming building compliance with plans and construction standards",
+                    submitTo: "Council via Surveyor",
+                    context: "Strata Certifier or Council must inspect building and common property to confirm floors, walls, ceilings match plans and specifications, and all facilities provided per consent",
+                    notes: ""
+                },
+                {
+                    da: 13,
+                    group: "INFRASTRUCTURE & SERVICES",
+                    title: "Plumbing and Drainage",
+                    dependency: "None",
+                    status: "Blocked",
+                    responsible: "Plumber",
+                    evidence: "(1) Works-as-executed sewer diagram, (2) Rear dwelling vent, (3) Overflow gully (150mm<fixture, 75mm>ground) + Plumber cert",
+                    submitTo: "Council via Surveyor",
+                    context: "Outstanding Section 68 plumbing items must be certified by a licensed plumber prior to Strata Certificate. Surveyor is expected to coordinate plumbing certification for these 3 items and related DA07/DA08/DA09 close-out evidence.",
+                    notes: "Assumption for surveyor review: DA13 is the core plumbing close-out and can be packaged to also support DA07/DA08/DA09 evidence where acceptable to Council/certifier."
+                },
+                {
+                    da: 14,
+                    group: "STATUTORY CERTIFICATES",
+                    title: "s.306 Compliance Certificate",
+                    dependency: "s.305 application + Council assessment (DA13 likely practical prerequisite)",
+                    status: "Pending",
+                    responsible: "Council",
+                    evidence: "s.306 Certificate of Compliance under Water Management Act 2000 (sewer and water authority)",
+                    submitTo: "Council via Surveyor",
+                    context: "Obtained from Council as sewer/water authority. s.305 application must be lodged with Council first. Required prior to strata certificate issue.",
+                    notes: "Assumption for surveyor review: DA14 depends on Council's s.305/s.306 process and may require DA13 plumbing close-out before Council issues certificate."
+                },
+                {
+                    da: 15,
+                    group: "STATUTORY CERTIFICATES",
+                    title: "s.307 Compliance Certificate",
+                    dependency: "Council Utilities compliance + final inspection evidence (DA13 likely practical prerequisite)",
+                    status: "Pending",
+                    responsible: "Council Utilities",
+                    evidence: "Compliance Certificate under Water Management Act 2000 (sewerage services) + documentary evidence of final inspection from Council",
+                    submitTo: "Council via Surveyor",
+                    context: "Obtained from Utilities Division of Council. Final inspection documentary evidence must be provided to Principal Certifier prior to strata certificate issue.",
+                    notes: "Assumption for surveyor review: DA15 requires Utilities compliance certificate plus separate Council final inspection evidence to Principal Certifier; confirm sequencing with DA12 inspection."
+                }
+            ]
+        };
+
+        function loadState() {
+            const saved = localStorage.getItem("strata_dashboard_v2_da_tracker");
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.rows && Array.isArray(parsed.rows)) {
+                        // Keep latest default content while preserving user progress.
+                        state.rows = state.rows.map(function(defaultRow) {
+                            const savedRow = parsed.rows.find(function(r) { return r.da === defaultRow.da; });
+                            if (!savedRow) return defaultRow;
+                            return {
+                                da: defaultRow.da,
+                                group: defaultRow.group,
+                                title: defaultRow.title,
+                                dependency: defaultRow.dependency,
+                                responsible: defaultRow.responsible,
+                                evidence: defaultRow.evidence,
+                                submitTo: defaultRow.submitTo,
+                                context: defaultRow.context,
+                                status: savedRow.status || defaultRow.status,
+                                notes: (savedRow.notes && savedRow.notes.trim()) ? savedRow.notes : defaultRow.notes
+                            };
+                        });
+                    }
+                } catch (e) {
+                    console.log("Could not parse saved state");
+                }
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem("strata_dashboard_v2_da_tracker", JSON.stringify(state));
+        }
+
+        function badgeForStatus(status) {
+            const map = {
+                "Complete": "badge-complete",
+                "In Progress": "badge-inprogress",
+                "Evidence Ready": "badge-evidence",
+                "Submitted": "badge-submitted",
+                "Verified": "badge-verified",
+                "Pending": "badge-pending",
+                "Blocked": "blocked",
+                "N-A": "badge-na"
+            };
+            const cls = map[status] || "badge-pending";
+            return '<span class="badge ' + cls + '">' + status + '</span>';
+        }
+
+        function renderRows() {
+            const adminBody = document.getElementById("adminBody");
+            const infraBody = document.getElementById("infraBody");
+            const certBody = document.getElementById("certBody");
+            
+            adminBody.innerHTML = "";
+            infraBody.innerHTML = "";
+            certBody.innerHTML = "";
+
+            state.rows.forEach(function (row, i) {
+                let targetBody;
+                if (row.group === "ADMINISTRATIVE") {
+                    targetBody = adminBody;
+                } else if (row.group === "INFRASTRUCTURE & SERVICES") {
+                    targetBody = infraBody;
+                } else if (row.group === "STATUTORY CERTIFICATES") {
+                    targetBody = certBody;
+                }
+
+                if (!targetBody) return;
+
+                const statusSelect = '<select data-idx="' + i + '" onchange="onStatusChange(' + i + ')">' +
+                    '<option ' + (row.status === "Not Started" ? "selected" : "") + '>Not Started</option>' +
+                    '<option ' + (row.status === "In Progress" ? "selected" : "") + '>In Progress</option>' +
+                    '<option ' + (row.status === "Complete" ? "selected" : "") + '>Complete</option>' +
+                    '<option ' + (row.status === "Evidence Ready" ? "selected" : "") + '>Evidence Ready</option>' +
+                    '<option ' + (row.status === "Submitted" ? "selected" : "") + '>Submitted</option>' +
+                    '<option ' + (row.status === "Verified" ? "selected" : "") + '>Verified</option>' +
+                    '<option ' + (row.status === "Blocked" ? "selected" : "") + '>Blocked</option>' +
+                    '<option ' + (row.status === "N-A" ? "selected" : "") + '>N-A</option>' +
+                    '</select>';
+
+                const notesText = '<div class="notes-text">' + escapeHTML(row.notes || "") + '</div>';
+
+                const tr = document.createElement("tr");
+                tr.innerHTML =
+                    '<td class="da-number">DA' + String(row.da).padStart(2, "0") + '</td>' +
+                    '<td class="da-title">' + row.title + '</td>' +
+                    '<td>' + row.dependency + '</td>' +
+                    '<td style="width: 10%;">' + statusSelect + '</td>' +
+                    '<td>' + row.responsible + '</td>' +
+                    '<td>' + row.evidence + '</td>' +
+                    '<td>' + row.submitTo + '</td>' +
+                    '<td>' + row.context + '</td>' +
+                    '<td style="min-width: 200px;">' + notesText + '</td>';
+                targetBody.appendChild(tr);
+            });
+        }
+
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('collapsed');
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement("div");
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function onStatusChange(idx) {
+            const select = document.querySelector('select[data-idx="' + idx + '"]');
+            state.rows[idx].status = select.value;
+            saveState();
+            renderRows();
+            updateOverallStatus();
+        }
+
+        function computeOverallStatus() {
+            const critical = [5, 7, 12, 13, 14, 15];
+            const criticalRows = state.rows.filter(function(r) { return critical.includes(r.da); });
+            const blocked = criticalRows.filter(function(r) { return r.status === "Blocked"; }).length;
+            const complete = criticalRows.filter(function(r) { return r.status === "Verified" || r.status === "Complete"; }).length;
+
+            if (blocked > 0) return "🔴 DELAYED (Critical dependencies blocked)";
+            if (complete === criticalRows.length) return "✅ ON TRACK (All critical items progressing)";
+            return "🟡 AT RISK (Some critical items incomplete)";
+        }
+
+        function updateOverallStatus() {
+            document.getElementById("overallStatus").textContent = computeOverallStatus();
+            const now = new Date().toLocaleString('en-AU');
+            document.getElementById("lastUpdate").textContent = now;
+        }
+
+        function exportToJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "da_tracker_export_" + new Date().toISOString().slice(0, 10) + ".json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        function resetAll() {
+            if (confirm("Reset all statuses and notes to defaults?")) {
+                localStorage.removeItem("strata_dashboard_v2_da_tracker");
+                location.reload();
+            }
+        }
+
+        loadState();
+        renderRows();
+        updateOverallStatus();
+    </script>
+</body>
+</html>
