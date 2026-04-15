@@ -228,7 +228,7 @@
 
         <div class="content">
             <div class="critical-path">
-                <h3>CRITICAL PATH (Blocks Final Submissions)</h3>
+                <h3>Operational Close-Out Sequence (Not Formal Consent Dependencies)</h3>
                 <p><strong>DA13 (Plumbing)</strong> → DA14/15 (Statutory Certs) → DA07 (Services) → DA12 (Strata Inspection) → DA05 (Subdivision)</p>
             </div>
 
@@ -395,13 +395,13 @@
                     da: 7,
                     group: "INFRASTRUCTURE & SERVICES",
                     title: "Services Within Lots",
-                    dependency: "None in consent (assumed practical link to DA13)",
+                    dependency: "None (independent condition prior to Strata Certificate).",
                     status: "Blocked",
                     responsible: "Surveyor",
                     evidence: "Surveyor services-within-lots certification",
                     submitTo: "Council via Surveyor",
                     context: "Prior to issue of any Strata Certificate, a Registered Surveyor must certify that all services as constructed (drainage, stormwater, water, gas, electricity, telecommunications, etc.) are within each lot or within appropriate easements.",
-                    notes: "Assumption for surveyor review: stamped services plan captures some services, but final DA07 certificate should confirm complete as-constructed service coverage and any water tank servicing implications."
+                    notes: "Operational sequencing assumption (not stated in consent): where practical, close-out may be coordinated with other services evidence to streamline submission."
                 },
                 {
                     da: 8,
@@ -424,8 +424,8 @@
                     responsible: "Council Utilities",
                     evidence: "Council-issued/installed water meter connected to reticulated supply + Principal Certifier confirmation",
                     submitTo: "Council via Surveyor",
-                    context: "Condition requires Council Utilities-issued meter connection to town reticulated supply and confirmation by Principal Certifier prior to further site works.",
-                    notes: "Assumption for surveyor review: meter is physically installed; confirm whether separate Principal Certifier confirmation is still required and whether to include DA09 in plumbing close-out evidence."
+                    context: "Water meter as issued and installed by Council Utilities department must be connected to the town's reticulated water supply prior to issue of Strata Certificate. Installation is to be confirmed by the Principal Certifier prior to further commencement of site works.",
+                    notes: "Consent does NOT expressly require separate meters per lot."
                 },
                 {
                     da: 10,
@@ -436,8 +436,8 @@
                     responsible: "Essential Energy",
                     evidence: "Notification of Arrangements from Essential Energy confirming infrastructure and low voltage reticulated supply to each lot",
                     submitTo: "Council via Surveyor",
-                    context: "Prior to Strata Certificate, Notification of Arrangements from Essential Energy must be provided to Council confirming electrical infrastructure and supply arrangements.",
-                    notes: "Requested from Essential Energy with no response to date. Need assistance from surveyor to close out."
+                    context: "Prior to issue of any Strata Certificate, a Notification of Arrangements from the electricity supply authority must be supplied to Council confirming that electrical infrastructure has been installed and that satisfactory arrangements have been made for supply of low voltage reticulated electricity to each proposed Lot.",
+                    notes: "Consent requires supply arrangements per lot, not necessarily separate metering (subject to authority confirmation)."
                 },
                 {
                     da: 11,
@@ -448,7 +448,7 @@
                     responsible: "NBN",
                     evidence: "Letter of practical completion from NBN confirming underground telecommunications at front boundary of each allotment",
                     submitTo: "Council via Surveyor",
-                    context: "Prior to Strata Certificate, NBN letter of practical completion is required confirming underground telecommunications at front boundary of each allotment.",
+                    context: "Prior to issue of the Strata Certificate, a letter of practical completion from the telecommunications infrastructure provider must be provided to Council confirming that arrangements have been made for the provision of underground telecommunications at the front boundary of each allotment in the subdivision.",
                     notes: "Requested from NBNCo; advised they will not provide the letter. Need assistance from surveyor to determine acceptable close-out pathway."
                 },
                 {
@@ -470,34 +470,34 @@
                     dependency: "None",
                     status: "Blocked",
                     responsible: "Plumber",
-                    evidence: "(1) Works-as-executed sewer diagram, (2) Rear dwelling vent, (3) Overflow gully (150mm<fixture, 75mm>ground) + Plumber cert",
+                    evidence: "1) Works as executed sewer service diagram, 2) Vent to rear dwelling, 3) Overflow relief gully at minimum 150mm below lowest fixture level and minimum 75mm above finished ground level, plus licensed plumber certification confirming completion",
                     submitTo: "Council via Surveyor",
-                    context: "Outstanding Section 68 plumbing items must be certified by a licensed plumber prior to Strata Certificate. Surveyor is expected to coordinate plumbing certification for these 3 items and related DA07/DA08/DA09 close-out evidence.",
-                    notes: "Assumption for surveyor review: DA13 is the core plumbing close-out and can be packaged to also support DA07/DA08/DA09 evidence where acceptable to Council/certifier."
+                    context: "The following outstanding plumbing and drainage matters associated with Section 68 must be resolved prior to issue of any Strata Certificate: 1) Works as executed sewer service diagram, 2) Vent to rear dwelling, 3) Overflow relief gully level requirements. Certification from a licensed plumber confirming completion must be provided to Council prior to issue of any Strata Certificate.",
+                    notes: ""
                 },
                 {
                     da: 14,
                     group: "STATUTORY CERTIFICATES",
                     title: "s.306 Compliance Certificate",
-                    dependency: "s.305 application + Council assessment (DA13 likely practical prerequisite)",
+                    dependency: "s.305 application lodged with Council",
                     status: "Pending",
                     responsible: "Council",
                     evidence: "s.306 Certificate of Compliance under Water Management Act 2000 (sewer and water authority)",
                     submitTo: "Council via Surveyor",
                     context: "Obtained from Council as sewer/water authority. s.305 application must be lodged with Council first. Required prior to strata certificate issue.",
-                    notes: "Assumption for surveyor review: DA14 depends on Council's s.305/s.306 process and may require DA13 plumbing close-out before Council issues certificate."
+                    notes: ""
                 },
                 {
                     da: 15,
                     group: "STATUTORY CERTIFICATES",
                     title: "s.307 Compliance Certificate",
-                    dependency: "Council Utilities compliance + final inspection evidence (DA13 likely practical prerequisite)",
+                    dependency: "s.307 certificate + final inspection documentary evidence",
                     status: "Pending",
                     responsible: "Council Utilities",
                     evidence: "Compliance Certificate under Water Management Act 2000 (sewerage services) + documentary evidence of final inspection from Council",
                     submitTo: "Council via Surveyor",
                     context: "Obtained from Utilities Division of Council. Final inspection documentary evidence must be provided to Principal Certifier prior to strata certificate issue.",
-                    notes: "Assumption for surveyor review: DA15 requires Utilities compliance certificate plus separate Council final inspection evidence to Principal Certifier; confirm sequencing with DA12 inspection."
+                    notes: ""
                 }
             ]
         };
