@@ -1,6 +1,7 @@
 # DA Item Context Register
 
-Project: Strata Subdivision - Multi-lot Development
+Project: Strata Subdivision - 4 and 4A Gardiner Road, Goulburn NSW
+Prepared by: Ben
 Purpose: Formal contextual capture tied directly to DA items for surveyor/certifier review.
 Date Started: 2026-04-09
 
